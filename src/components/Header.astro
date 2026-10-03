@@ -1,0 +1,174 @@
+---
+import { Menu, X, Phone, ChevronDown, Shield } from '@lucide/astro';
+import { services, industries } from '../data/nav';
+
+const currentPath = Astro.url.pathname;
+
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-mantis-charcoal/90 backdrop-blur-md"
+>
+  <div class="container-site">
+    <div class="flex items-center justify-between h-16 md:h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 shrink-0 z-10">
+        <div class="relative w-20 h-20 md:w-28 md:h-28 -mb-4 md:-mb-8 shrink-0">
+          <img
+            src="/images/mantis_logo.png"
+            alt="Mantis Security Logo"
+            class="absolute inset-0 w-full h-full object-contain"
+            width="112"
+            height="112"
+          />
+        </div>
+        <div class="hidden sm:block font-heading whitespace-nowrap">
+          <span class="text-mantis-yellow font-extrabold text-xl md:text-2xl leading-tight block">MANTIS</span>
+          <span class="text-mantis-yellow font-extrabold text-xl md:text-2xl leading-tight tracking-[0.1em] uppercase block">Security</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center">
+        <a href="/" class={`nav-link ${isActive('/') ? 'text-mantis-yellow' : ''}`}>Home</a>
+        <a href="/about-us" class={`nav-link ${isActive('/about-us') ? 'text-mantis-yellow' : ''}`}>About</a>
+
+        <!-- Services dropdown -->
+        <div class="relative group">
+          <a href="/services" class={`nav-link flex items-center ${isActive('/services') ? 'text-mantis-yellow' : ''}`}>
+            Services <ChevronDown class="ml-1 w-3 h-3" />
+          </a>
+          <div
+            class="absolute top-full left-0 bg-mantis-charcoal border-t-2 border-mantis-yellow shadow-2xl py-2 w-64 z-50 opacity-0 invisible translate-y-2.5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+          >
+            <a
+              href="/services"
+              class="block px-5 py-2.5 text-mantis-yellow text-sm font-heading font-semibold hover:bg-white/5 border-b border-white/10 mb-1"
+            >All Services</a>
+            {services.map((s) => (
+              <a
+                href={s.href}
+                class="block px-5 py-2.5 text-white/80 text-sm hover:text-mantis-yellow hover:bg-white/5 hover:pl-6 transition-all"
+              >{s.name}</a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Industries dropdown -->
+        <div class="relative group">
+          <a href="/industries" class={`nav-link flex items-center ${isActive('/industries') ? 'text-mantis-yellow' : ''}`}>
+            Industries <ChevronDown class="ml-1 w-3 h-3" />
+          </a>
+          <div
+            class="absolute top-full left-0 bg-mantis-charcoal border-t-2 border-mantis-yellow shadow-2xl py-2 w-64 z-50 opacity-0 invisible translate-y-2.5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+          >
+            <a
+              href="/industries"
+              class="block px-5 py-2.5 text-mantis-yellow text-sm font-heading font-semibold hover:bg-white/5 border-b border-white/10 mb-1"
+            >All Industries</a>
+            {industries.map((i) => (
+              <a
+                href={i.href}
+                class="block px-5 py-2.5 text-white/80 text-sm hover:text-mantis-yellow hover:bg-white/5 hover:pl-6 transition-all"
+              >{i.name}</a>
+            ))}
+          </div>
+        </div>
+
+        <a href="/case-studies" class={`nav-link ${isActive('/case-studies') ? 'text-mantis-yellow' : ''}`}>Case Studies</a>
+        <a href="/blog" class={`nav-link ${isActive('/blog') ? 'text-mantis-yellow' : ''}`}>Blog</a>
+        <a href="/contact" class={`nav-link ${isActive('/contact') ? 'text-mantis-yellow' : ''}`}>Contact</a>
+      </nav>
+
+      <!-- CTA + Phone -->
+      <div class="hidden lg:flex items-center gap-3 shrink-0">
+        <a
+          href="tel:+27114871000"
+          class="hidden xl:flex items-center gap-1.5 text-white/80 hover:text-mantis-yellow text-sm whitespace-nowrap transition-colors"
+        >
+          <Phone class="w-4 h-4" /> <span class="font-medium">011 487 1000</span>
+        </a>
+        <a
+          href="/contact?type=assessment"
+          class="bg-mantis-yellow hover:bg-mantis-yellow-dark text-mantis-black px-4 py-2.5 rounded-md text-[13px] font-heading font-bold uppercase tracking-wide whitespace-nowrap transition-all hover:shadow-lg hover:shadow-mantis-yellow/20 flex items-center gap-1.5"
+        >
+          <Shield class="w-4 h-4" /> Get Assessment
+        </a>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button id="mobile-toggle" class="lg:hidden text-white p-2" aria-label="Toggle menu" aria-expanded="false">
+        <Menu class="w-6 h-6 menu-open-icon" />
+        <X class="w-6 h-6 menu-close-icon hidden" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden lg:hidden bg-mantis-charcoal border-t border-white/10 overflow-hidden">
+    <div class="px-4 py-4 space-y-1 max-h-[80vh] overflow-y-auto">
+      <a href="/" class="block py-2.5 text-white/90 hover:text-mantis-yellow font-heading font-semibold uppercase tracking-wide text-sm">Home</a>
+      <a href="/about-us" class="block py-2.5 text-white/90 hover:text-mantis-yellow font-heading font-semibold uppercase tracking-wide text-sm">About Us</a>
+      <a href="/services" class="block py-2.5 text-white/90 hover:text-mantis-yellow font-heading font-semibold uppercase tracking-wide text-sm">Services</a>
+      {services.map((s) => (
+        <a href={s.href} class="block py-2 pl-4 text-white/60 hover:text-mantis-yellow text-sm">{s.name}</a>
+      ))}
+      <a href="/industries" class="block py-2.5 text-white/90 hover:text-mantis-yellow font-heading font-semibold uppercase tracking-wide text-sm">Industries</a>
+      <a href="/case-studies" class="block py-2.5 text-white/90 hover:text-mantis-yellow font-heading font-semibold uppercase tracking-wide text-sm">Case Studies</a>
+      <a href="/blog" class="block py-2.5 text-white/90 hover:text-mantis-yellow font-heading font-semibold uppercase tracking-wide text-sm">Blog</a>
+      <a href="/careers" class="block py-2.5 text-white/90 hover:text-mantis-yellow font-heading font-semibold uppercase tracking-wide text-sm">Careers</a>
+      <a href="/contact" class="block py-2.5 text-white/90 hover:text-mantis-yellow font-heading font-semibold uppercase tracking-wide text-sm">Contact</a>
+      <div class="pt-3 border-t border-white/10">
+        <a href="tel:+27114871000" class="flex items-center gap-2 py-2 text-mantis-yellow font-medium">
+          <Phone class="w-4 h-4" /> 011 487 1000
+        </a>
+        <a
+          href="/contact?type=assessment"
+          class="mt-2 inline-flex items-center justify-center gap-2 bg-mantis-red hover:bg-mantis-red-dark text-white font-heading font-bold px-8 py-4 rounded-md transition-all w-full"
+        >
+          Request Security Assessment
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const toggle = document.getElementById('mobile-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  // Solid background + shadow once the page is scrolled
+  const onScroll = () => {
+    if (!header) return;
+    const scrolled = window.scrollY > 20;
+    header.classList.toggle('bg-mantis-charcoal/90', !scrolled);
+    header.classList.toggle('backdrop-blur-md', !scrolled);
+    header.classList.toggle('bg-mantis-charcoal', scrolled);
+    header.classList.toggle('shadow-xl', scrolled);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Mobile menu toggle
+  toggle?.addEventListener('click', () => {
+    if (!menu || !toggle) return;
+    const open = menu.classList.toggle('hidden') === false;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.querySelector('.menu-open-icon')?.classList.toggle('hidden', open);
+    toggle.querySelector('.menu-close-icon')?.classList.toggle('hidden', !open);
+  });
+
+  // Close the mobile menu after navigating
+  menu?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.querySelector('.menu-open-icon')?.classList.remove('hidden');
+      toggle?.querySelector('.menu-close-icon')?.classList.add('hidden');
+    })
+  );
+</script>

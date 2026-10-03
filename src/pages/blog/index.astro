@@ -1,0 +1,67 @@
+---
+import PublicLayout from '../../layouts/PublicLayout.astro';
+import { BookOpen, Calendar, ArrowRight } from '@lucide/astro';
+import { getBlogPosts } from '../../lib/sanity';
+
+const posts = await getBlogPosts();
+
+const formatDate = (d: string) =>
+  new Date(d).toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<PublicLayout
+  title="Security Blog | Mantis Security"
+  description="Expert insights on security trends, best practices, and industry news from Mantis Security."
+>
+  <section class="relative py-28 md:py-36 bg-mantis-black">
+    <div class="relative max-w-[1200px] mx-auto px-4 sm:px-6 text-center">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-mantis-yellow/10 border border-mantis-yellow/20 rounded-full px-4 py-2 mb-6">
+          <BookOpen class="w-4 h-4 text-mantis-yellow" />
+          <span class="text-mantis-yellow text-sm font-medium">Security Insights</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Security <span class="text-mantis-yellow">Blog</span></h1>
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">Expert insights, industry trends, and practical security advice from the Mantis Security team.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      {posts.length === 0 ? (
+        <div class="text-center py-20">
+          <BookOpen class="w-16 h-16 text-gray-300 mx-auto mb-4" />
+          <p class="text-gray-500 text-lg">Blog posts coming soon. Check back for expert security insights.</p>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post, i) => (
+            <div class="reveal" style={`transition-delay: ${i * 100}ms`}>
+              <a href={`/blog/${post.slug}`} class="group block bg-white rounded-lg shadow-lg hover:shadow-xl transition-all overflow-hidden">
+                <div class="relative aspect-video bg-gray-200">
+                  {post.featuredImage && (
+                    <img src={post.featuredImage} alt={post.title ?? 'Blog post'} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  )}
+                  {post.category && (
+                    <span class="absolute top-4 left-4 bg-mantis-yellow text-mantis-black text-xs font-bold px-3 py-1 rounded-full">{post.category}</span>
+                  )}
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 text-sm text-gray-400 mb-3">
+                    <Calendar class="w-4 h-4" />
+                    {post.publishedAt ? formatDate(post.publishedAt) : ''}
+                  </div>
+                  <h2 class="text-xl font-bold text-mantis-black mb-2 group-hover:text-mantis-red transition-colors line-clamp-2">{post.title ?? ''}</h2>
+                  <p class="text-gray-600 text-sm line-clamp-3 mb-4">{post.excerpt ?? ''}</p>
+                  <span class="inline-flex items-center gap-1 text-mantis-red font-semibold text-sm group-hover:gap-2 transition-all">
+                    Read More <ArrowRight class="w-4 h-4" />
+                  </span>
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</PublicLayout>

@@ -1,0 +1,146 @@
+---
+import { Phone, Mail, MapPin, Headset } from '@lucide/astro';
+import MantisShield from './icons/MantisShield.astro';
+import SAFlag from './icons/SAFlag.astro';
+import BrandIcon from './icons/BrandIcons.astro';
+import { services } from '../data/nav';
+
+const quickLinks = [
+  { name: 'About Us', href: '/about-us' },
+  { name: 'Case Studies', href: '/case-studies' },
+  { name: 'Testimonials', href: '/testimonials' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Careers', href: '/careers' },
+  { name: 'FAQ', href: '/faq' },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-mantis-charcoal text-white">
+  <div class="container-site py-14">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <!-- Company Info -->
+      <div>
+        <div class="flex items-center gap-2.5 mb-5">
+          <div class="relative w-10 h-10">
+            <img
+              src="/images/mantis_logo.png"
+              alt="Mantis Security Logo"
+              class="absolute inset-0 w-full h-full object-contain"
+              width="40"
+              height="40"
+            />
+          </div>
+          <div class="font-heading whitespace-nowrap">
+            <span class="text-mantis-yellow font-extrabold text-lg block leading-tight">MANTIS</span>
+            <span class="text-mantis-yellow font-extrabold text-lg block leading-tight tracking-[0.1em] uppercase">Security</span>
+          </div>
+        </div>
+        <p class="text-white/60 text-sm leading-relaxed mb-4">Proactive, integrated security solutions combining 35+ years of expertise with advanced technology and elite personnel.</p>
+        <p class="text-mantis-yellow text-sm font-medium flex items-center gap-1.5"><MantisShield class="w-4 h-4 shrink-0" /> PSIRA Compliant</p>
+        <!-- Wording prescribed verbatim by PSIRA Regulation 12(b) — do not reword. -->
+        <p class="text-white/40 text-xs leading-relaxed mt-3">Registered as a security service provider by the Private Security Industry Regulatory Authority, registration number 259171</p>
+        <p class="text-white/60 text-sm font-medium flex items-center gap-2 mt-3"><SAFlag class="w-5 h-3.5 shrink-0 rounded-[1px]" /> Proudly South African</p>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <div class="mb-5">
+          <h4 class="font-heading text-white font-bold text-sm uppercase tracking-[0.15em]">Services</h4>
+          <div class="w-8 h-0.5 bg-mantis-yellow mt-2"></div>
+        </div>
+        <ul class="space-y-2.5">
+          {services.map((s) => (
+            <li>
+              <a href={s.href} class="text-white/60 hover:text-mantis-yellow hover:pl-1 text-sm transition-all">{s.name}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <div class="mb-5">
+          <h4 class="font-heading text-white font-bold text-sm uppercase tracking-[0.15em]">Company</h4>
+          <div class="w-8 h-0.5 bg-mantis-yellow mt-2"></div>
+        </div>
+        <ul class="space-y-2.5">
+          {quickLinks.map((l) => (
+            <li>
+              <a href={l.href} class="text-white/60 hover:text-mantis-yellow hover:pl-1 text-sm transition-all">{l.name}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <div class="mb-5">
+          <h4 class="font-heading text-white font-bold text-sm uppercase tracking-[0.15em]">Contact Us</h4>
+          <div class="w-8 h-0.5 bg-mantis-yellow mt-2"></div>
+        </div>
+        <ul class="space-y-3">
+          <li>
+            <a href="tel:+27114871000" class="flex items-start gap-2 text-white/60 hover:text-mantis-yellow text-sm transition-colors">
+              <Phone class="w-4 h-4 mt-0.5 shrink-0 text-mantis-yellow" /> 011 487 1000
+            </a>
+          </li>
+          <li>
+            <a href="tel:+27861101000" class="flex items-start gap-2 text-white/60 hover:text-mantis-yellow text-sm transition-colors">
+              <Headset class="w-4 h-4 mt-0.5 shrink-0 text-mantis-yellow" /> 24/7 Control Room: 0861 101 000
+            </a>
+          </li>
+          <li>
+            <a href="mailto:info@mantissecurity.co.za" class="flex items-start gap-2 text-white/60 hover:text-mantis-yellow text-sm transition-colors">
+              <Mail class="w-4 h-4 mt-0.5 shrink-0 text-mantis-yellow" /> info@mantissecurity.co.za
+            </a>
+          </li>
+          <li>
+            <span class="flex items-start gap-2 text-white/60 text-sm">
+              <MapPin class="w-4 h-4 mt-0.5 shrink-0 text-mantis-yellow" /> 2 Elm Street, Houghton Estate<br />Johannesburg, Gauteng
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-6">
+      <p class="text-white/40 text-sm">© {year} Mantis Security. All rights reserved.</p>
+      <div class="flex items-center gap-5">
+        <a
+          href="https://www.facebook.com/mantissouthafrica/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Mantis Security on Facebook"
+          class="text-white/40 hover:text-mantis-yellow transition-colors"
+        >
+          <BrandIcon icon="facebook" class="w-5 h-5" />
+        </a>
+        <a
+          href="https://www.linkedin.com/company/mantis-security/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Mantis Security on LinkedIn"
+          class="text-white/40 hover:text-mantis-yellow transition-colors"
+        >
+          <BrandIcon icon="linkedin" class="w-5 h-5" />
+        </a>
+        <a
+          href="https://www.instagram.com/mantisinmotion/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Mantis Security on Instagram"
+          class="text-white/40 hover:text-mantis-yellow transition-colors"
+        >
+          <BrandIcon icon="instagram" class="w-5 h-5" />
+        </a>
+      </div>
+      <div class="flex gap-4">
+        <a href="/privacy-policy" class="text-white/40 hover:text-white/70 text-sm transition-colors">Privacy Policy</a>
+        <a href="/terms-and-conditions" class="text-white/40 hover:text-white/70 text-sm transition-colors">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>

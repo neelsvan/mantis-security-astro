@@ -1,0 +1,51 @@
+---
+import PublicLayout from '../../layouts/PublicLayout.astro';
+import CTASection from '../../components/CTASection.astro';
+import * as Lucide from '@lucide/astro';
+import { ArrowRight } from '@lucide/astro';
+import { industries } from '../../data/industries';
+
+const getIcon = (name: string) => (Lucide as unknown as Record<string, any>)[name] ?? null;
+---
+
+<PublicLayout
+  title="Industries We Serve | Mantis Security"
+  description="Tailored security solutions for commercial, industrial, warehousing, education, residential, and hospitality sectors across South Africa."
+>
+  <section class="relative py-32 md:py-40 bg-mantis-black">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 text-center">
+      <div class="max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Tailored Security for <span class="text-mantis-yellow">Every Industry</span></h1>
+        <p class="text-lg text-white/70">Decades of cross-sector expertise means we understand the unique risks, regulations, and operational realities of your industry.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-20">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {industries.map((ind, i) => {
+          const Icon = getIcon(ind.cardIcon);
+          return (
+            <div class="reveal" style={`transition-delay: ${i * 100}ms`}>
+              <a href={`/industries/${ind.slug}`} class="group block rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100">
+                <div class="relative aspect-[16/10] bg-gray-100">
+                  <img src={ind.cardImage} alt={ind.cardName} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-mantis-black/60 to-transparent"></div>
+                  <div class="absolute bottom-4 left-4">{Icon && <Icon class="w-8 h-8 text-mantis-yellow" />}</div>
+                </div>
+                <div class="p-5">
+                  <h3 class="font-bold text-lg text-mantis-black mb-2">{ind.cardName}</h3>
+                  <p class="text-mantis-gray text-sm leading-relaxed mb-3">{ind.cardDesc}</p>
+                  <span class="inline-flex items-center gap-1 text-mantis-red font-semibold text-sm">Explore Solutions <ArrowRight class="w-4 h-4" /></span>
+                </div>
+              </a>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</PublicLayout>

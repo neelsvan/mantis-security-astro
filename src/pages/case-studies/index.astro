@@ -1,0 +1,69 @@
+---
+import PublicLayout from '../../layouts/PublicLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import CTASection from '../../components/CTASection.astro';
+import { Award, ArrowRight } from '@lucide/astro';
+import { getCaseStudies } from '../../lib/sanity';
+
+const studies = await getCaseStudies();
+---
+
+<PublicLayout
+  title="Case Studies | Mantis Security"
+  description="Real-world security success stories showing how Mantis Security protects businesses across South Africa."
+>
+  <section class="relative py-28 md:py-36 bg-mantis-black">
+    <div class="relative max-w-[1200px] mx-auto px-4 sm:px-6 text-center">
+      <div>
+        <div class="inline-flex items-center gap-2.5 bg-mantis-yellow/10 border border-mantis-yellow/30 rounded-full px-6 py-3 mb-6">
+          <Award class="w-6 h-6 text-mantis-yellow" />
+          <span class="text-mantis-yellow text-base md:text-lg font-bold">Proven Results</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Case <span class="text-mantis-yellow">Studies</span></h1>
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">Real-world examples of how Mantis Security delivers measurable security improvements for businesses across South Africa.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-12">
+      {studies.map((cs, i) => (
+        <div class="reveal bg-white rounded-lg shadow-lg overflow-hidden" style={`transition-delay: ${i * 100}ms`}>
+          <a href={`/case-studies/${cs.slug}`} class="group block md:flex">
+            <div class="relative aspect-video md:aspect-auto md:w-2/5 bg-gray-200">
+              {cs.imageUrl && <img src={cs.imageUrl} alt={cs.title ?? ''} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />}
+              <span class="absolute top-4 left-4 bg-mantis-yellow text-mantis-black text-xs font-bold px-3 py-1 rounded-full">{cs.industry ?? ''}</span>
+            </div>
+            <div class="p-8 md:w-3/5">
+              <h2 class="text-2xl font-bold text-mantis-black mb-2 group-hover:text-mantis-red transition-colors">{cs.title ?? ''}</h2>
+              <p class="text-sm text-gray-500 mb-4">Client: {cs.client ?? ''}</p>
+              <div class="space-y-3 text-sm">
+                <div><span class="font-semibold text-mantis-red">Challenge:</span> <span class="text-gray-600">{(cs.challenge ?? '').substring(0, 150)}...</span></div>
+                <div><span class="font-semibold text-mantis-yellow">Result:</span> <span class="text-gray-600">{(cs.results ?? '').substring(0, 150)}...</span></div>
+              </div>
+              <span class="inline-flex items-center gap-1 text-mantis-red font-semibold text-sm mt-4 group-hover:gap-2 transition-all">
+                Read Full Case Study <ArrowRight class="w-4 h-4" />
+              </span>
+            </div>
+          </a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="py-20 bg-mantis-black">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <SectionHeading eyebrow="Recognised Excellence" title="Awards & Accreditation" subtitle="Mantis Security officers are regularly recognised by SANSEA and PSIRA for professionalism and excellence in the private security industry." light />
+      <div class="grid md:grid-cols-2 gap-6 mt-12">
+        <div class="reveal relative aspect-[4/3] rounded-lg overflow-hidden">
+          <img src="/images/sansea_awards_team.png" alt="Mantis Security officers at a SANSEA industry event" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="reveal relative aspect-[4/3] rounded-lg overflow-hidden" style="transition-delay: 100ms">
+          <img src="/images/sansea_awards_ceremony.png" alt="Mantis Security officers receiving PSIRA/SANSEA certificates" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection variant="dark" title="Want Results Like These?" subtitle="Let us design a security solution that delivers measurable outcomes for your business." buttonText="Get Started" buttonHref="/contact" />
+</PublicLayout>

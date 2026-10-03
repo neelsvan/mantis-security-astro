@@ -1,0 +1,180 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import { Camera, X, ChevronLeft, ChevronRight } from '@lucide/astro';
+
+const images = [
+  { src: '/images/guarding_officer_vehicle.jpg', alt: 'Mantis Security officer with branded response vehicle', category: 'Guarding' },
+  { src: '/images/commercial_office_officer.jpg', alt: 'Mantis Security officer stationed at a commercial office building', category: 'Guarding' },
+  { src: '/images/control_room_monitoring.jpg', alt: 'CCTV monitoring control room operations', category: 'Electronic' },
+  { src: '/images/control_room_desk.jpg', alt: 'Control room operator reviewing camera feeds', category: 'Electronic' },
+  { src: '/images/k9_handler_dog.jpg', alt: 'Mantis K9 handler and patrol dog', category: 'K9 Unit' },
+  { src: '/images/warehouse_security_search.jpg', alt: 'Warehouse and logistics security operations', category: 'Industrial' },
+  { src: '/images/vip_protection_detail.jpg', alt: 'VIP close protection detail', category: 'VIP Protection' },
+  { src: '/images/sansea_awards_team.png', alt: 'Mantis Security team at a SANSEA industry event', category: 'Team' },
+  { src: '/images/tactical_vest_closeup.jpg', alt: 'Mantis Security tactical response officer', category: 'Special Operations' },
+  { src: '/images/residential_gate_officer.jpg', alt: 'Mantis Security officer at a residential estate gate', category: 'Residential' },
+  { src: '/images/residential_estate_officer.png', alt: 'Mantis Security officer patrolling a gated estate', category: 'Residential' },
+  { src: '/images/education_officer_campus.jpg', alt: 'Mantis Security officer on a school campus', category: 'Education' },
+];
+
+const categories = ['All', ...Array.from(new Set(images.map((i) => i.category)))];
+---
+
+<PublicLayout
+  title="Gallery | Mantis Security"
+  description="View our professional security operations, team, and facilities in action."
+>
+  <section class="relative py-28 md:py-36 bg-mantis-black">
+    <div class="relative max-w-[1200px] mx-auto px-4 sm:px-6 text-center">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-mantis-yellow/10 border border-mantis-yellow/20 rounded-full px-4 py-2 mb-6">
+          <Camera class="w-4 h-4 text-mantis-yellow" />
+          <span class="text-mantis-yellow text-sm font-medium">Our Work in Action</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Photo <span class="text-mantis-yellow">Gallery</span></h1>
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">See Mantis Security&rsquo;s professional operations, expert team, and cutting-edge equipment in action.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <!-- Filter -->
+      <div id="gallery-filters" class="flex flex-wrap justify-center gap-3 mb-12">
+        {categories.map((c) => (
+          <button
+            data-filter={c}
+            class={`gallery-filter px-5 py-2 rounded-full text-sm font-medium transition-all ${c === 'All' ? 'bg-mantis-yellow text-mantis-black shadow-lg' : 'bg-white text-gray-600 hover:bg-gray-100 shadow'}`}
+          >
+            {c}
+          </button>
+        ))}
+      </div>
+
+      <!-- Grid -->
+      <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {images.map((img) => (
+          <div
+            data-category={img.category}
+            data-src={img.src}
+            data-alt={img.alt}
+            class="gallery-item cursor-pointer group relative aspect-[4/3] bg-gray-200 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+          >
+            <img src={img.src} alt={img.alt} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+              <div class="absolute bottom-4 left-4">
+                <span class="bg-mantis-yellow text-mantis-black text-xs font-bold px-3 py-1 rounded-full">{img.category}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="hidden fixed inset-0 bg-black/90 z-50 items-center justify-center p-4">
+    <button id="lightbox-close" aria-label="Close" class="absolute top-4 right-4 text-white hover:text-mantis-yellow z-10">
+      <X class="w-8 h-8" />
+    </button>
+    <button id="lightbox-prev" aria-label="Previous image" class="absolute left-4 text-white hover:text-mantis-yellow z-10">
+      <ChevronLeft class="w-10 h-10" />
+    </button>
+    <button id="lightbox-next" aria-label="Next image" class="absolute right-4 text-white hover:text-mantis-yellow z-10">
+      <ChevronRight class="w-10 h-10" />
+    </button>
+    <div class="relative max-w-4xl w-full aspect-[16/10]">
+      <img id="lightbox-img" src="" alt="" class="absolute inset-0 w-full h-full object-contain" />
+    </div>
+  </div>
+
+  <CTASection variant="dark" title="Impressed by What You See?" subtitle="Let us put this expertise to work protecting your business." buttonText="Get a Quote" buttonHref="/contact" />
+</PublicLayout>
+
+<script>
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.gallery-filter');
+  const items = document.querySelectorAll<HTMLElement>('.gallery-item');
+  const lightbox = document.getElementById('lightbox')!;
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+
+  let visible: HTMLElement[] = Array.from(items);
+  let idx = 0;
+
+  // Filtering
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      filterBtns.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle('bg-mantis-yellow', active);
+        b.classList.toggle('text-mantis-black', active);
+        b.classList.toggle('shadow-lg', active);
+        b.classList.toggle('bg-white', !active);
+        b.classList.toggle('text-gray-600', !active);
+        b.classList.toggle('shadow', !active);
+      });
+      visible = [];
+      items.forEach((it) => {
+        const show = f === 'All' || it.dataset.category === f;
+        it.classList.toggle('hidden', !show);
+        if (show) visible.push(it);
+      });
+    });
+  });
+
+  // Lightbox
+  const show = () => {
+    const item = visible[idx];
+    if (!item) return;
+    lightboxImg.src = item.dataset.src ?? '';
+    lightboxImg.alt = item.dataset.alt ?? '';
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+  };
+  const hide = () => {
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+  };
+
+  items.forEach((it) =>
+    it.addEventListener('click', () => {
+      idx = Math.max(0, visible.indexOf(it));
+      show();
+    })
+  );
+  document.getElementById('lightbox-close')?.addEventListener('click', hide);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) hide();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.classList.contains('hidden')) return;
+    if (e.key === 'Escape') hide();
+    if (e.key === 'ArrowLeft') {
+      if (idx > 0) {
+        idx--;
+        show();
+      }
+    }
+    if (e.key === 'ArrowRight') {
+      if (idx < visible.length - 1) {
+        idx++;
+        show();
+      }
+    }
+  });
+  document.getElementById('lightbox-prev')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (idx > 0) {
+      idx--;
+      show();
+    }
+  });
+  document.getElementById('lightbox-next')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (idx < visible.length - 1) {
+      idx++;
+      show();
+    }
+  });
+</script>

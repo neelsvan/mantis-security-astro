@@ -1,0 +1,153 @@
+---
+// Shared service detail page template, ported from service-page-template.tsx.
+import { Shield, CheckCircle, ArrowRight } from '@lucide/astro';
+import * as Lucide from '@lucide/astro';
+import CTASection from './CTASection.astro';
+import ContactForm from './ContactForm.astro';
+import RiskMatrix from './RiskMatrix.astro';
+import type { Service } from '../data/services';
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const { title, subtitle, heroImage, problem, solution, components, benefits, process: processSteps, videoSrc, showRiskMatrix } = service.template;
+
+const getIcon = (name: string) => {
+  if (!name) return null;
+  return (Lucide as unknown as Record<string, any>)[name] ?? null;
+};
+---
+
+<div>
+  <!-- Hero -->
+  <section class="relative py-32 md:py-40 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src={heroImage} alt={title} class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-r from-mantis-black/95 via-mantis-black/80 to-mantis-black/40"></div>
+    </div>
+    <div class="relative max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div class="max-w-2xl">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">{title}</h1>
+        <p class="text-lg text-white/80">{subtitle}</p>
+        <div class="flex flex-wrap gap-4 mt-8">
+          <a href="/contact?type=quote" class="bg-mantis-yellow hover:bg-mantis-yellow-dark text-mantis-black px-7 py-3.5 rounded-lg font-bold transition-all flex items-center gap-2">
+            <Shield class="w-5 h-5" /> Get a Quote
+          </a>
+          <a href="/contact?type=assessment" class="border-2 border-white/30 hover:border-mantis-yellow text-white hover:text-mantis-yellow px-7 py-3.5 rounded-lg font-bold transition-all flex items-center gap-2">
+            Request Assessment <ArrowRight class="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem / Solution -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div class="bg-red-50 rounded-xl p-8">
+          <h2 class="text-2xl font-bold text-mantis-red mb-4">The Challenge</h2>
+          <p class="text-mantis-gray leading-relaxed">{problem}</p>
+        </div>
+        <div class="bg-mantis-yellow/10 border border-mantis-yellow/30 rounded-xl p-8">
+          <h2 class="text-2xl font-bold text-mantis-black mb-4">The Mantis Solution</h2>
+          <p class="text-mantis-gray leading-relaxed">{solution}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Risk Matrix (Risk Assessments only) -->
+  {showRiskMatrix && (
+    <section class="py-16 md:py-20 bg-white">
+      <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+        <h2 class="text-3xl font-bold text-mantis-black mb-3 text-center">How We Score Risk</h2>
+        <p class="text-mantis-gray text-center max-w-2xl mx-auto mb-10">Every finding is plotted on a Likelihood × Impact matrix, in line with ISO 31000 risk management principles, so recommendations are prioritised by what matters most to your business.</p>
+        <div class="overflow-x-auto">
+          <RiskMatrix />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Components -->
+  <section class="py-16 md:py-20 bg-mantis-light-gray">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl font-bold text-mantis-black mb-10 text-center">What's Included</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {components.map((c, i) => {
+          const Icon = getIcon(c.icon);
+          return (
+            <div class="reveal bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all" style={`transition-delay: ${i * 80}ms`}>
+              <div class="w-12 h-12 rounded-xl bg-mantis-red flex items-center justify-center mb-4">
+                {Icon && <Icon class="w-6 h-6 text-mantis-yellow" />}
+                {c.image && <img src={c.image} alt="" width="24" height="24" class="w-6 h-6 object-contain" />}
+              </div>
+              <h3 class="font-bold text-mantis-black mb-2">{c.title}</h3>
+              <p class="text-mantis-gray text-sm leading-relaxed">{c.desc}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Video -->
+  {videoSrc && (
+    <section class="py-16 md:py-20 bg-white">
+      <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+        <h2 class="text-3xl font-bold text-mantis-black mb-10 text-center">See It in Action</h2>
+        <div class="relative aspect-video max-w-3xl mx-auto rounded-xl overflow-hidden shadow-xl">
+          <video controls preload="none" poster={heroImage} class="w-full h-full object-cover">
+            <source src={videoSrc} type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Process -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl font-bold text-mantis-black mb-10 text-center">How It Works</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {processSteps.map((p, i) => (
+          <div class="reveal text-center relative" style={`transition-delay: ${i * 150}ms`}>
+            <div class="w-14 h-14 rounded-full bg-mantis-red text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">{p.step}</div>
+            <h3 class="font-bold text-mantis-black mb-2">{p.title}</h3>
+            <p class="text-mantis-gray text-sm">{p.desc}</p>
+            {i < processSteps.length - 1 && <div class="hidden md:block absolute top-7 left-[60%] w-[80%] h-0.5 bg-gray-200"></div>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="py-16 md:py-20 bg-mantis-black">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl font-bold text-white mb-10 text-center">Key Benefits</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+        {benefits.map((b) => (
+          <div class="flex items-center gap-3 bg-white/5 rounded-lg p-4">
+            <CheckCircle class="w-5 h-5 text-mantis-yellow shrink-0" />
+            <span class="text-white/90">{b}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="py-16 md:py-20 bg-mantis-light-gray">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6">
+      <h2 class="text-3xl font-bold text-mantis-black mb-2 text-center">Interested in This Service?</h2>
+      <p class="text-mantis-gray text-center mb-8">Get in touch and our team will design a solution tailored to your needs.</p>
+      <div class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+        <ContactForm formType="quote" />
+      </div>
+    </div>
+  </section>
+</div>

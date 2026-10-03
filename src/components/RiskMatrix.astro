@@ -1,0 +1,64 @@
+---
+// Likelihood × Impact risk matrix (ISO 31000 style), ported from the Next.js
+// risk-matrix.tsx component. Row 0 = Almost Certain (top) … Row 4 = Rare (bottom).
+const impactLabels = ['Negligible', 'Minor', 'Moderate', 'Major', 'Severe'];
+const likelihoodLabels = ['Almost Certain', 'Likely', 'Possible', 'Unlikely', 'Rare'];
+
+function cellColor(rowIndex: number, colIndex: number) {
+  const likelihoodWeight = 5 - rowIndex;
+  const impactWeight = colIndex + 1;
+  const score = likelihoodWeight * impactWeight;
+  if (score >= 15) return '#8B1A1A'; // critical — mantis red
+  if (score >= 8) return '#D97706'; // high — amber
+  if (score >= 4) return '#FFD700'; // medium — mantis yellow
+  return '#4C8C4A'; // low — muted green
+}
+
+const tiers = [
+  { color: '#4C8C4A', label: 'Low — accept & monitor' },
+  { color: '#FFD700', label: 'Medium — mitigate' },
+  { color: '#D97706', label: 'High — priority action' },
+  { color: '#8B1A1A', label: 'Critical — immediate action' },
+];
+---
+
+<div class="flex flex-col items-center">
+  <div class="flex">
+    <div class="flex flex-col justify-center pr-3">
+      <span class="text-xs md:text-sm font-semibold text-mantis-black -rotate-90 whitespace-nowrap tracking-wide">LIKELIHOOD</span>
+    </div>
+    <div>
+      <div class="flex flex-col gap-1">
+        {likelihoodLabels.map((lLabel, rowIndex) => (
+          <div class="flex items-center gap-1">
+            <div class="w-16 sm:w-20 md:w-24 text-right pr-2 text-[9px] sm:text-[11px] font-medium text-mantis-gray shrink-0">{lLabel}</div>
+            {impactLabels.map((_, colIndex) => (
+              <div
+                class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-sm flex items-center justify-center text-white text-[10px] sm:text-xs font-bold shadow-sm"
+                style={`background-color: ${cellColor(rowIndex, colIndex)}`}
+              >
+                {(5 - rowIndex) * (colIndex + 1)}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div class="flex gap-1 mt-2">
+        <div class="w-16 sm:w-20 md:w-24 shrink-0"></div>
+        {impactLabels.map((label) => (
+          <div class="w-12 sm:w-16 md:w-20 text-center text-[9px] sm:text-[11px] font-medium text-mantis-gray">{label}</div>
+        ))}
+      </div>
+      <p class="text-center text-xs md:text-sm font-semibold text-mantis-black mt-1 tracking-wide ml-16 sm:ml-20 md:ml-24">IMPACT</p>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap justify-center gap-4 mt-8">
+    {tiers.map((tier) => (
+      <div class="flex items-center gap-2">
+        <span class="w-4 h-4 rounded-sm shrink-0" style={`background-color: ${tier.color}`}></span>
+        <span class="text-xs md:text-sm text-mantis-gray">{tier.label}</span>
+      </div>
+    ))}
+  </div>
+</div>

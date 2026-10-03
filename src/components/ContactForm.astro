@@ -1,0 +1,164 @@
+---
+// Contact form: posts JSON to /api/contact (Cloudflare Pages Function) with
+// Turnstile verification when a site key is configured.
+import { Send, CheckCircle, AlertCircle, User, Mail, Phone, Building2, MessageSquare } from '@lucide/astro';
+
+interface Props {
+  formType?: string;
+  compact?: boolean;
+}
+const { formType = 'contact', compact = false } = Astro.props;
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+
+const submitLabel =
+  formType === 'assessment' ? 'Request Security Assessment' : formType === 'quote' ? 'Request Quote' : 'Send Message';
+---
+
+<div id="contact-form-wrapper" data-form-type={formType}>
+  <form id="contact-form" class="space-y-4" novalidate={false}>
+    <input type="hidden" name="formType" value={formType} />
+    <div class={compact ? 'space-y-4' : 'grid grid-cols-1 md:grid-cols-2 gap-4'}>
+      <div class="relative">
+        <User class="absolute left-3 top-3.5 w-5 h-5 text-mantis-gray/50" />
+        <input
+          type="text"
+          required
+          name="name"
+          placeholder="Full Name"
+          class="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-mantis-yellow focus:border-transparent outline-none transition-all bg-white"
+        />
+      </div>
+      <div class="relative">
+        <Mail class="absolute left-3 top-3.5 w-5 h-5 text-mantis-gray/50" />
+        <input
+          type="email"
+          required
+          name="email"
+          placeholder="Email Address"
+          class="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-mantis-yellow focus:border-transparent outline-none transition-all bg-white"
+        />
+      </div>
+      <div class="relative">
+        <Phone class="absolute left-3 top-3.5 w-5 h-5 text-mantis-gray/50" />
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Phone Number"
+          class="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-mantis-yellow focus:border-transparent outline-none transition-all bg-white"
+        />
+      </div>
+      <div class="relative">
+        <Building2 class="absolute left-3 top-3.5 w-5 h-5 text-mantis-gray/50" />
+        <input
+          type="text"
+          name="company"
+          placeholder="Company Name"
+          class="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-mantis-yellow focus:border-transparent outline-none transition-all bg-white"
+        />
+      </div>
+    </div>
+    {!compact && (
+      <select
+        name="service"
+        class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-mantis-yellow focus:border-transparent outline-none transition-all bg-white text-mantis-gray"
+      >
+        <option value="">Select a Service (Optional)</option>
+        <option>Guarding Services</option>
+        <option>Electronic Security & Installations</option>
+        <option>Offsite Monitoring & Control Room</option>
+        <option>VIP / Close Protection</option>
+        <option>K9 & Special Operations</option>
+        <option>Event Security</option>
+        <option>Security Audits & Risk Assessments</option>
+        <option>Investigations & Corporate Crime Intelligence</option>
+      </select>
+    )}
+    <div class="relative">
+      <MessageSquare class="absolute left-3 top-3.5 w-5 h-5 text-mantis-gray/50" />
+      <textarea
+        required
+        rows={compact ? 3 : 5}
+        name="message"
+        placeholder="How can we help you?"
+        class="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-mantis-yellow focus:border-transparent outline-none transition-all bg-white resize-none"></textarea>
+    </div>
+
+    {turnstileSiteKey && (
+      <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light"></div>
+    )}
+
+    <div id="contact-error" class="hidden flex items-center gap-2 text-red-600 text-sm">
+      <AlertCircle class="w-4 h-4" /> Something went wrong. Please try again.
+    </div>
+    <button
+      type="submit"
+      id="contact-submit"
+      class="w-full bg-mantis-red hover:bg-mantis-red-dark text-white px-8 py-4 rounded-lg font-bold text-lg transition-all hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
+    >
+      <Send class="w-5 h-5" /> <span id="contact-submit-label">{submitLabel}</span>
+    </button>
+    <p class="text-xs text-mantis-gray/60 text-center">Your information is secure and will only be used to respond to your enquiry.</p>
+  </form>
+
+  <div id="contact-success" class="hidden text-center py-10">
+    <CheckCircle class="w-16 h-16 text-green-500 mx-auto mb-4" />
+    <h3 class="text-2xl font-bold text-mantis-black mb-2">Message Sent Successfully</h3>
+    <p class="text-mantis-gray">Our team will respond within 24 hours. Thank you for choosing Mantis Security.</p>
+    <button id="contact-reset" class="mt-6 text-mantis-red font-medium hover:underline">Send another message</button>
+  </div>
+</div>
+
+<script>
+  const wrapper = document.getElementById('contact-form-wrapper');
+
+  wrapper?.querySelector('#contact-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const submitBtn = form.querySelector<HTMLButtonElement>('#contact-submit')!;
+    const submitLabel = form.querySelector<HTMLElement>('#contact-submit-label')!;
+    const errorBox = wrapper.querySelector<HTMLElement>('#contact-error')!;
+    const isAssessment = (form.elements as any).formType?.value === 'assessment';
+    const isQuote = (form.elements as any).formType?.value === 'quote';
+
+    errorBox.classList.add('hidden');
+    submitBtn.disabled = true;
+    submitLabel.textContent = 'Sending...';
+
+    try {
+      const fd = new FormData(form);
+      const payload: Record<string, string> = {};
+      fd.forEach((v, k) => (payload[k] = String(v)));
+      // Turnstile token (implicit widget) when present
+      const tw = window.turnstile as { getResponse?: () => string } | undefined;
+      payload.turnstileToken = tw?.getResponse ? tw.getResponse() : '';
+
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+
+      form.classList.add('hidden');
+      wrapper.querySelector('#contact-success')?.classList.remove('hidden');
+    } catch {
+      errorBox.classList.remove('hidden');
+    } finally {
+      submitBtn.disabled = false;
+      submitLabel.textContent = isAssessment
+        ? 'Request Security Assessment'
+        : isQuote
+          ? 'Request Quote'
+          : 'Send Message';
+    }
+  });
+
+  wrapper?.querySelector('#contact-reset')?.addEventListener('click', () => {
+    const form = wrapper.querySelector<HTMLFormElement>('#contact-form');
+    if (!form) return;
+    form.reset();
+    form.classList.remove('hidden');
+    wrapper.querySelector('#contact-success')?.classList.add('hidden');
+  });
+</script>

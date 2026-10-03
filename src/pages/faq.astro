@@ -1,0 +1,58 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import { HelpCircle, ChevronDown, Phone } from '@lucide/astro';
+import faqsData from '../data/faqs.json';
+
+const faqs = faqsData as Array<{ question: string; answer: string; category: string; order: number }>;
+---
+
+<PublicLayout
+  title="FAQ | Mantis Security"
+  description="Frequently asked questions about security services, PSIRA compliance, and working with Mantis Security."
+>
+  <section class="relative py-28 md:py-36 bg-mantis-black">
+    <div class="relative max-w-[1200px] mx-auto px-4 sm:px-6 text-center">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-mantis-yellow/10 border border-mantis-yellow/20 rounded-full px-4 py-2 mb-6">
+          <HelpCircle class="w-4 h-4 text-mantis-yellow" />
+          <span class="text-mantis-yellow text-sm font-medium">Common Questions</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Frequently Asked <span class="text-mantis-yellow">Questions</span></h1>
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">Find answers to common questions about our security services, processes, and compliance.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6">
+      <div class="space-y-4">
+        {faqs.map((faq, i) => (
+          <details class="reveal group bg-white rounded-lg shadow-md overflow-hidden" name="faq" style={`transition-delay: ${i * 50}ms`}>
+            <summary class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-mantis-black pr-4">{faq.question}</span>
+              <ChevronDown class="w-5 h-5 text-mantis-yellow shrink-0 transition-transform duration-300 group-open:rotate-180" />
+            </summary>
+            <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-100 pt-4">{faq.answer}</div>
+          </details>
+        ))}
+      </div>
+
+      <div class="mt-12 bg-mantis-black/5 rounded-lg p-8 text-center">
+        <HelpCircle class="w-10 h-10 text-mantis-red mx-auto mb-4" />
+        <h3 class="text-xl font-bold mb-2">Still Have Questions?</h3>
+        <p class="text-gray-600 mb-6">Our security experts are ready to help with any queries.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/contact" class="inline-flex items-center justify-center gap-2 bg-mantis-red text-white px-6 py-3 rounded-lg font-semibold hover:bg-mantis-red/90 transition-colors">
+            Contact Us
+          </a>
+          <a href="tel:+27114871000" class="inline-flex items-center justify-center gap-2 bg-mantis-black text-mantis-yellow px-6 py-3 rounded-lg font-semibold hover:bg-mantis-black/90 transition-colors">
+            <Phone class="w-4 h-4" /> 011 487 1000
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</PublicLayout>

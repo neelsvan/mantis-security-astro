@@ -1,0 +1,82 @@
+---
+import PublicLayout from '../../layouts/PublicLayout.astro';
+import CTASection from '../../components/CTASection.astro';
+import { ArrowLeft, Target, Lightbulb, TrendingUp, Building2 } from '@lucide/astro';
+import { getCaseStudies, getCaseStudy, type CaseStudy } from '../../lib/sanity';
+
+export async function getStaticPaths() {
+  const studies = await getCaseStudies();
+  return studies.map((cs) => ({
+    params: { slug: cs.slug },
+    props: { slug: cs.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const cs: CaseStudy | null = await getCaseStudy(slug);
+
+const sections = [
+  { icon: Target, title: 'The Challenge', content: cs?.challenge ?? '', color: 'text-mantis-red', bg: 'bg-mantis-red/5' },
+  { icon: Lightbulb, title: 'Our Solution', content: cs?.solution ?? '', color: 'text-mantis-yellow', bg: 'bg-mantis-yellow/5' },
+  { icon: TrendingUp, title: 'The Results', content: cs?.results ?? '', color: 'text-green-600', bg: 'bg-green-50' },
+];
+---
+
+<PublicLayout title={cs ? `${cs.title} | Mantis Security` : 'Case Study Not Found | Mantis Security'} description={cs ? `${cs.challenge?.substring(0, 150) ?? ''}...` : 'Mantis Security case studies.'}>
+  {!cs ? (
+    <div class="min-h-screen flex flex-col items-center justify-center gap-4 pt-32 pb-32">
+      <p class="text-gray-500 text-lg">Case study not found.</p>
+      <a href="/case-studies" class="text-mantis-red font-semibold hover:underline">Back to Case Studies</a>
+    </div>
+  ) : (
+    <>
+      <section class="relative py-28 md:py-36 bg-mantis-black">
+        {cs.imageUrl && (
+          <div class="absolute inset-0">
+            <img src={cs.imageUrl} alt={cs.title ?? ''} class="absolute inset-0 w-full h-full object-cover opacity-20" />
+            <div class="absolute inset-0 bg-mantis-black/70"></div>
+          </div>
+        )}
+        <div class="relative max-w-[800px] mx-auto px-4 sm:px-6">
+          <div>
+            <a href="/case-studies" class="inline-flex items-center gap-2 text-mantis-yellow hover:text-mantis-yellow/80 mb-6 text-sm font-medium">
+              <ArrowLeft class="w-4 h-4" /> Back to Case Studies
+            </a>
+            <span class="block mb-3"><span class="bg-mantis-yellow text-mantis-black text-xs font-bold px-3 py-1 rounded-full">{cs.industry ?? ''}</span></span>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">{cs.title ?? ''}</h1>
+            <div class="flex items-center gap-2 text-gray-400"><Building2 class="w-4 h-4" /><span>{cs.client ?? ''}</span></div>
+          </div>
+        </div>
+      </section>
+
+      {cs.imageUrl && (
+        <section class="bg-white pt-10 md:pt-12">
+          <div class="max-w-[800px] mx-auto px-4 sm:px-6">
+            <div class="relative aspect-video rounded-lg overflow-hidden shadow-lg">
+              <img src={cs.imageUrl} alt={cs.title ?? ''} class="absolute inset-0 w-full h-full object-cover" />
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section class="py-16 bg-white">
+        <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8">
+          {sections.map((s, i) => {
+            const Icon = s.icon;
+            return (
+              <div class={`reveal ${s.bg} rounded-lg p-8`} style={`transition-delay: ${i * 150}ms`}>
+                <div class="flex items-center gap-3 mb-4">
+                  <Icon class={`w-6 h-6 ${s.color}`} />
+                  <h2 class="text-xl font-bold text-mantis-black">{s.title}</h2>
+                </div>
+                <p class="text-gray-700 leading-relaxed whitespace-pre-line">{s.content}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <CTASection variant="red" title="Ready for Similar Results?" subtitle="Contact us today for a free security assessment." buttonText="Contact Us" buttonHref="/contact" />
+    </>
+  )}
+</PublicLayout>

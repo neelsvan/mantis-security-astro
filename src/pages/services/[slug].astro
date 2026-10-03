@@ -1,0 +1,18 @@
+---
+import PublicLayout from '../../layouts/PublicLayout.astro';
+import ServicePageTemplate from '../../components/ServicePageTemplate.astro';
+import { services } from '../../data/services';
+
+export function getStaticPaths() {
+  return services.map((s) => ({
+    params: { slug: s.slug },
+    props: { service: s },
+  }));
+}
+
+const { service } = Astro.props;
+---
+
+<PublicLayout title={`${service.metaTitle} | Mantis Security`} description={service.metaDescription}>
+  <ServicePageTemplate service={service} />
+</PublicLayout>

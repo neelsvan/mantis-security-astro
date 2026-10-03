@@ -1,0 +1,18 @@
+---
+import PublicLayout from '../../layouts/PublicLayout.astro';
+import IndustryPageTemplate from '../../components/IndustryPageTemplate.astro';
+import { industries } from '../../data/industries';
+
+export function getStaticPaths() {
+  return industries.map((ind) => ({
+    params: { slug: ind.slug },
+    props: { industry: ind },
+  }));
+}
+
+const { industry } = Astro.props;
+---
+
+<PublicLayout title={industry.metaTitle} description={industry.metaDescription}>
+  <IndustryPageTemplate industry={industry} />
+</PublicLayout>

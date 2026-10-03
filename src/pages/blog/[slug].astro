@@ -1,0 +1,87 @@
+---
+import PublicLayout from '../../layouts/PublicLayout.astro';
+import CTASection from '../../components/CTASection.astro';
+import { Calendar, ArrowLeft, User } from '@lucide/astro';
+import { getBlogPosts, getBlogPost } from '../../lib/sanity';
+import { toHTML } from '@portabletext/to-html';
+
+export async function getStaticPaths() {
+  const posts = await getBlogPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const post = await getBlogPost(slug);
+
+const formatDate = (d: string) =>
+  new Date(d).toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
+
+// Portable Text → HTML with Tailwind typography prose styles applied at the wrapper
+const bodyHtml =
+  post?.body
+    ? toHTML(post.body, {
+        components: {
+          marks: {
+            link: ({ children, value }) =>
+              `<a href="${value?.href ?? ''}" target="_blank" rel="noopener noreferrer" class="text-mantis-red hover:underline">${children}</a>`,
+          },
+        },
+      })
+    : '';
+---
+
+<PublicLayout title={post ? `${post.title} | Mantis Security` : 'Post Not Found | Mantis Security'} description={post?.excerpt ?? 'Security insights from Mantis Security.'}>
+  {!post ? (
+    <div class="min-h-screen flex flex-col items-center justify-center gap-4 pt-32 pb-32">
+      <p class="text-gray-500 text-lg">Post not found.</p>
+      <a href="/blog" class="text-mantis-red font-semibold hover:underline">Back to Blog</a>
+    </div>
+  ) : (
+    <>
+      <section class="relative py-28 md:py-36 bg-mantis-black">
+        {post.featuredImage && (
+          <div class="absolute inset-0">
+            <img src={post.featuredImage} alt={post.title ?? ''} class="absolute inset-0 w-full h-full object-cover opacity-20" />
+            <div class="absolute inset-0 bg-mantis-black/70"></div>
+          </div>
+        )}
+        <div class="relative max-w-[800px] mx-auto px-4 sm:px-6">
+          <div>
+            <a href="/blog" class="inline-flex items-center gap-2 text-mantis-yellow hover:text-mantis-yellow/80 mb-6 text-sm font-medium">
+              <ArrowLeft class="w-4 h-4" /> Back to Blog
+            </a>
+            {post.category && (
+              <span class="block mb-3"><span class="bg-mantis-yellow text-mantis-black text-xs font-bold px-3 py-1 rounded-full">{post.category}</span></span>
+            )}
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">{post.title ?? ''}</h1>
+            <div class="flex items-center gap-4 text-gray-400 text-sm">
+              {post.author && <span class="flex items-center gap-1"><User class="w-4 h-4" />{post.author}</span>}
+              {post.publishedAt && <span class="flex items-center gap-1"><Calendar class="w-4 h-4" />{formatDate(post.publishedAt)}</span>}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {post.featuredImage && (
+        <section class="bg-white pt-10 md:pt-12">
+          <div class="max-w-[800px] mx-auto px-4 sm:px-6">
+            <div class="relative aspect-video rounded-lg overflow-hidden shadow-lg">
+              <img src={post.featuredImage} alt={post.title ?? ''} class="absolute inset-0 w-full h-full object-cover" />
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section class="py-16 bg-white">
+        <div class="max-w-[800px] mx-auto px-4 sm:px-6">
+          <div class="prose prose-lg max-w-none prose-headings:text-mantis-black prose-a:text-mantis-red" set:html={bodyHtml} />
+        </div>
+      </section>
+
+      <CTASection variant="dark" title="Need Expert Security Advice?" subtitle="Contact Mantis Security for a free consultation on protecting your business." buttonText="Contact Us" buttonHref="/contact" />
+    </>
+  )}
+</PublicLayout>

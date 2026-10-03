@@ -1,0 +1,325 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+import TrustBar from '../components/TrustBar.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CTASection from '../components/CTASection.astro';
+import {
+  Shield,
+  Eye,
+  Brain,
+  Layers,
+  Star,
+  ArrowRight,
+  Building2,
+  Factory,
+  Warehouse,
+  GraduationCap,
+  Home,
+  Hotel,
+  Cctv,
+  Users,
+  Search,
+  Lock,
+  AlertTriangle,
+  Zap,
+  ChevronLeft,
+  ChevronRight,
+} from '@lucide/astro';
+import testimonialsData from '../data/testimonials.json';
+
+const services = [
+  { name: 'Guarding Services', desc: 'Trained, PSIRA-certified officers providing professional on-site protection.', icon: Users, href: '/services/guarding-services', image: '/images/guarding_officer_vehicle.jpg' },
+  { name: 'Electronic Security', desc: 'AI-powered CCTV, access control, and integrated surveillance systems.', icon: Cctv, href: '/services/electronic-security', image: '/images/school_security_cctv.jpg' },
+  { name: 'Offsite Monitoring', desc: '24/7 control room monitoring with rapid incident response.', icon: Eye, href: '/services/offsite-monitoring', image: '/images/control_room_monitoring_new.jpg' },
+  { name: 'Risk Assessments', desc: 'Professional security audits to identify vulnerabilities and design strategies.', icon: Search, href: '/services/risk-assessments', image: '/images/risk_assessment_stock.png' },
+];
+
+const painPoints = [
+  { icon: AlertTriangle, title: 'Unreliable Guards?', desc: 'Our rigorously trained, PSIRA-certified officers represent the gold standard of professionalism.' },
+  { icon: Lock, title: 'Outdated Systems?', desc: 'Integrated technology solutions combining AI surveillance, access control, and smart monitoring.' },
+  { icon: Zap, title: 'Slow Response?', desc: '24/7 control room monitoring with rapid response protocols and real-time incident management.' },
+  { icon: Search, title: 'Unidentified Threats?', desc: 'Proactive intelligence, covert investigations, and analytics to prevent threats before they escalate.' },
+];
+
+const industries = [
+  { name: 'Commercial & Office', icon: Building2, href: '/industries/commercial-security', image: '/images/commercial_office_officer.jpg' },
+  { name: 'Industrial', icon: Factory, href: '/industries/industrial-security', image: '/images/industrial_security_stock.png' },
+  { name: 'Warehousing', icon: Warehouse, href: '/industries/warehouse-logistics-security', image: '/images/warehouse_security_search.jpg' },
+  { name: 'Education', icon: GraduationCap, href: '/industries/education-security', image: '/images/education_officer_campus.jpg' },
+  { name: 'Residential Estates', icon: Home, href: '/industries/residential-estate-security', image: '/images/residential_estate_officer.png' },
+  { name: 'Hospitality & Retail', icon: Hotel, href: '/industries/hospitality-retail-security', image: '/images/hospitality_officers_entrance.jpg' },
+];
+
+const pillars = [
+  { icon: Brain, title: 'Integrated Intelligence', desc: 'A synergy of elite officers, smart technology, and proactive intelligence working as one unified force.' },
+  { icon: Shield, title: 'Proactive Prevention', desc: 'We don\u2019t just respond to alarms — we prevent the conditions that trigger them through risk analysis and foresight.' },
+  { icon: Layers, title: 'Tailored Expertise', desc: 'Your risk profile is unique. With 35+ years across industries, we design security that fits your environment.' },
+];
+
+// Featured testimonials, build-time JSON (was runtime /api/testimonials with placeholder fallback)
+const featured = (testimonialsData as any[]).filter((t) => t.featured);
+
+const stats = [
+  { value: 35, suffix: '+', label: 'Years Protecting SA' },
+  { value: 80, suffix: '%', label: 'Avg. Incident Reduction' },
+  { value: 6, suffix: '+', label: 'Industries Served' },
+  { value: 24, suffix: '/7', label: 'Monitoring & Response' },
+];
+---
+
+<PublicLayout>
+  <!-- Hero -->
+  <section class="relative min-h-[88vh] flex items-center overflow-hidden bg-mantis-charcoal">
+    <div class="absolute inset-0">
+      <img
+        src="/images/control_room_desk.jpg"
+        alt="Mantis Security control room officers monitoring live CCTV feeds"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-mantis-charcoal/90 via-mantis-charcoal/75 to-mantis-charcoal/90"></div>
+    </div>
+    <div class="relative container-site pt-28 pb-20 w-full">
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="reveal eyebrow text-mantis-yellow flex items-center justify-center gap-3 mb-5">
+          <span class="inline-block w-10 h-0.5 bg-mantis-yellow"></span> 35+ Years of Trusted Protection
+        </p>
+        <h1 class="reveal text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-extrabold text-white leading-[1.08] mb-6" style="transition-delay: 100ms">
+          Integrated Security for a <span class="text-mantis-yellow">Complex</span> World
+        </h1>
+        <p class="reveal text-lg md:text-xl text-white/80 mb-10 leading-relaxed max-w-2xl mx-auto" style="transition-delay: 200ms">
+          Proactive protection for South African businesses, combining advanced technology, elite personnel, and decades of trusted experience.
+        </p>
+        <div class="reveal flex flex-col sm:flex-row gap-4 justify-center" style="transition-delay: 300ms">
+          <a href="/contact?type=assessment" class="btn-primary text-lg">
+            <Shield class="w-5 h-5" /> Request Security Assessment
+          </a>
+          <a href="/services" class="btn-outline-light text-lg">
+            Explore Services <ArrowRight class="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Bar -->
+  <TrustBar />
+
+  <!-- The Mantis Difference — distinctive dark feature band -->
+  <section class="py-20 md:py-28 bg-mantis-charcoal overflow-hidden">
+    <div class="container-site">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div class="reveal">
+          <p class="eyebrow text-mantis-yellow mb-3">The Mantis Difference</p>
+          <h2 class="text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold leading-[1.1] text-white">What Sets Us Apart in a Crowded Market</h2>
+          <div class="w-20 h-1.5 bg-mantis-yellow mt-6 mb-10"></div>
+          <div class="space-y-8">
+            {pillars.map((p) => {
+              const Icon = p.icon;
+              return (
+                <div class="flex gap-5 group">
+                  <div class="w-16 h-16 rounded-lg bg-mantis-yellow flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                    <Icon class="w-8 h-8 text-mantis-black" />
+                  </div>
+                  <div>
+                    <h3 class="text-xl md:text-2xl font-bold text-white mb-1.5">{p.title}</h3>
+                    <p class="text-white/70 leading-relaxed">{p.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <a href="/about-us" class="inline-flex items-center gap-2 mt-10 font-heading font-bold text-mantis-yellow hover:gap-3.5 transition-all">
+            More About Us <ArrowRight class="w-4 h-4" />
+          </a>
+        </div>
+        <div class="reveal relative" style="transition-delay: 150ms">
+          <div class="relative aspect-[4/3] rounded-lg overflow-hidden shadow-2xl ring-1 ring-white/10">
+            <img src="/images/team_photo_stock.png" alt="The Mantis Security team" class="absolute inset-0 w-full h-full object-cover" />
+          </div>
+          <div class="absolute -bottom-6 -left-6 bg-mantis-yellow rounded-lg px-8 py-6 shadow-xl hidden sm:block">
+            <div class="font-heading text-5xl font-extrabold text-mantis-black"><span class="animated-counter" data-end="35" data-suffix="+" data-duration="2000">35+</span></div>
+            <div class="text-mantis-black/70 text-xs uppercase tracking-[0.15em] font-semibold mt-1">Years Protecting SA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pain Points -->
+  <section class="py-16 md:py-24 bg-mantis-surface">
+    <div class="container-site">
+      <SectionHeading eyebrow="Common Challenges" title="Is Your Security Keeping Pace with the Risks?" subtitle="Common challenges we solve every day for businesses across South Africa." />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {painPoints.map((p, i) => {
+          const Icon = p.icon;
+          return (
+            <div
+              class="reveal bg-white rounded-md p-7 shadow-sm hover:shadow-xl border-t-4 border-transparent hover:border-mantis-yellow hover:-translate-y-1 transition-all duration-300"
+              style={`transition-delay: ${i * 100}ms`}
+            >
+              <div class="w-12 h-12 rounded-md bg-mantis-yellow flex items-center justify-center mb-5">
+                <Icon class="w-6 h-6 text-mantis-black" />
+              </div>
+              <h3 class="text-lg font-bold text-mantis-black mb-2">{p.title}</h3>
+              <p class="text-mantis-gray text-sm leading-relaxed">{p.desc}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services — alternating bands -->
+  <section class="py-16 md:py-24 bg-white overflow-hidden">
+    <div class="container-site">
+      <SectionHeading eyebrow="What We Do" title="Beyond Guarding: Your Complete Security Partner" subtitle="Explore our full suite of integrated services, from intelligent surveillance to specialised investigations." />
+      <div class="space-y-16 md:space-y-20">
+        {services.map((s, i) => {
+          const Icon = s.icon;
+          const reversed = i % 2 === 1;
+          return (
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              <div class={`reveal ${reversed ? 'lg:order-2' : ''}`}>
+                <a href={s.href} class="group block relative aspect-[3/2] rounded-md overflow-hidden shadow-lg">
+                  <img src={s.image} alt={s.name} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-mantis-charcoal/50 to-transparent"></div>
+                  <div class="absolute bottom-5 left-5 bg-mantis-yellow rounded-md p-2.5">
+                    <Icon class="w-6 h-6 text-mantis-black" />
+                  </div>
+                </a>
+              </div>
+              <div class={`reveal ${reversed ? 'lg:order-1' : ''}`} style="transition-delay: 150ms">
+                <p class="eyebrow text-mantis-red mb-3">0{i + 1}</p>
+                <h3 class="text-2xl md:text-3xl font-bold text-mantis-black mb-4">{s.name}</h3>
+                <div class="w-16 h-1 bg-mantis-yellow mb-5"></div>
+                <p class="text-mantis-gray leading-relaxed mb-7">{s.desc}</p>
+                <a href={s.href} class="inline-flex items-center gap-2 font-heading font-bold text-mantis-black border-b-2 border-mantis-yellow pb-1 hover:gap-3.5 transition-all">
+                  Learn More <ArrowRight class="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div class="reveal text-center mt-16">
+        <a href="/services" class="btn-dark">
+          View All Services <ArrowRight class="w-5 h-5" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industries -->
+  <section class="py-16 md:py-24 bg-mantis-surface">
+    <div class="container-site">
+      <SectionHeading eyebrow="Who We Protect" title="Tailored Solutions for Your Industry" subtitle="Decades of cross-sector expertise means we understand your specific security challenges." />
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        {industries.map((ind, i) => {
+          const Icon = ind.icon;
+          return (
+            <div class="reveal" style={`transition-delay: ${i * 75}ms`}>
+              <a href={ind.href} class="group block relative rounded-md overflow-hidden aspect-[4/3] shadow-sm hover:shadow-2xl transition-all">
+                <img src={ind.image} alt={`${ind.name} security solutions`} class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div class="absolute inset-0 bg-gradient-to-t from-mantis-charcoal/90 via-mantis-charcoal/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-4 md:p-5">
+                  <div class="flex items-center gap-2">
+                    <Icon class="w-5 h-5 text-mantis-yellow" />
+                    <h3 class="text-white font-heading font-bold text-sm md:text-base">{ind.name}</h3>
+                  </div>
+                  <div class="h-0.5 bg-mantis-yellow mt-3 w-0 group-hover:w-full transition-all duration-500"></div>
+                </div>
+              </a>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials — scroll-snap carousel (featured, build-time data) -->
+  {featured.length > 0 && (
+    <section class="py-16 md:py-24 bg-white overflow-hidden">
+      <div class="container-site">
+        <SectionHeading eyebrow="Testimonials" title="Trusted by Businesses Across South Africa" subtitle="Hear from the organisations that rely on Mantis Security every day." />
+        <div class="reveal relative px-2 md:px-12">
+          <div id="testimonial-track" class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {featured.map((t) => (
+              <div class="snap-start shrink-0 w-[85%] md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
+                <div class="relative h-full bg-mantis-surface border-l-4 border-mantis-yellow rounded-md p-7 flex flex-col">
+                  {t.isSample && (
+                    <span class="inline-block self-start mb-3 bg-mantis-yellow text-mantis-black text-xs font-bold px-3 py-1 rounded-full shadow">Sample Content</span>
+                  )}
+                  {t.pendingApproval && (
+                    <span class="inline-block self-start mb-3 bg-mantis-yellow text-mantis-black text-xs font-bold px-3 py-1 rounded-full shadow">Pending Client Approval</span>
+                  )}
+                  <div class="flex gap-1 mb-4">
+                    {Array.from({ length: t.rating ?? 5 }).map(() => (
+                      <Star class="w-5 h-5 text-mantis-yellow fill-mantis-yellow" />
+                    ))}
+                  </div>
+                  <p class="text-mantis-gray leading-relaxed mb-5 text-sm flex-1">&ldquo;{t.content}&rdquo;</p>
+                  <div>
+                    <p class="font-heading font-bold text-mantis-black">{t.name}</p>
+                    <p class="text-sm text-mantis-slate">{t.role}{t.role ? ', ' : ''}{t.company}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <button
+            id="testimonial-prev"
+            aria-label="Previous testimonial"
+            class="hidden md:inline-flex absolute top-1/2 -translate-y-1/2 -left-1 w-10 h-10 items-center justify-center rounded-full border bg-white shadow-md hover:bg-mantis-yellow/20 transition-colors"
+          >
+            <ChevronLeft class="w-5 h-5" />
+          </button>
+          <button
+            id="testimonial-next"
+            aria-label="Next testimonial"
+            class="hidden md:inline-flex absolute top-1/2 -translate-y-1/2 -right-1 w-10 h-10 items-center justify-center rounded-full border bg-white shadow-md hover:bg-mantis-yellow/20 transition-colors"
+          >
+            <ChevronRight class="w-5 h-5" />
+          </button>
+        </div>
+        <div class="text-center mt-10">
+          <a href="/testimonials" class="inline-flex items-center gap-2 font-heading font-bold text-mantis-red hover:text-mantis-red-light transition-colors">
+            Read More Testimonials <ArrowRight class="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Stats Section -->
+  <section class="py-16 md:py-20 bg-mantis-red">
+    <div class="container-site">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        {stats.map((s, i) => (
+          <div class="reveal" style={`transition-delay: ${i * 100}ms`}>
+            <div class="font-heading text-4xl md:text-5xl font-extrabold text-white">
+              <span class="animated-counter" data-end={s.value} data-suffix={s.suffix} data-duration="2000">{s.value}{s.suffix}</span>
+            </div>
+            <p class="text-white/70 mt-2 text-xs uppercase tracking-[0.2em]">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTASection />
+</PublicLayout>
+
+<script>
+  // Testimonial carousel arrows (replaces the embla carousel)
+  const track = document.getElementById('testimonial-track');
+  const prev = document.getElementById('testimonial-prev');
+  const next = document.getElementById('testimonial-next');
+
+  const step = () => {
+    const card = track?.querySelector<HTMLElement>(':scope > div');
+    return card ? card.offsetWidth + 24 : 320;
+  };
+  prev?.addEventListener('click', () => track?.scrollBy({ left: -step(), behavior: 'smooth' }));
+  next?.addEventListener('click', () => track?.scrollBy({ left: step(), behavior: 'smooth' }));
+</script>

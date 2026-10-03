@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Mark Kramer",
+    "role": "Chief Executive Officer",
+    "bio": "With over 35 years in the security industry, Mark founded Mantis Security with a vision to deliver integrated, technology-driven protection. His leadership has built the company into one of South Africa's most trusted security providers.",
+    "imageUrl": null,
+    "order": 1
+  },
+  {
+    "name": "Eyal Ben-Shir",
+    "role": "External Talent Consultant",
+    "bio": "Eyal brings international expertise in security talent development. He leads Mantis's recruitment and training programs, ensuring every officer meets the highest standards of professionalism and capability.",
+    "imageUrl": null,
+    "order": 2
+  },
+  {
+    "name": "James Molefe",
+    "role": "Operations Director",
+    "bio": "James oversees all day-to-day security operations, managing deployments across industries. His operational expertise ensures seamless service delivery for every client.",
+    "imageUrl": null,
+    "order": 3
+  },
+  {
+    "name": "Nomsa Dlamini",
+    "role": "Head of Technology",
+    "bio": "Nomsa leads Mantis's electronic security and technology division, implementing cutting-edge surveillance, access control, and monitoring solutions for clients nationwide.",
+    "imageUrl": null,
+    "order": 4
+  }
+]

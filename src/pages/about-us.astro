@@ -1,0 +1,197 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CTASection from '../components/CTASection.astro';
+import {
+  Shield,
+  BookOpen,
+  Heart,
+  Users,
+  Star,
+  Target,
+  CheckCircle,
+  ClipboardCheck,
+} from '@lucide/astro';
+import teamData from '../data/team-members.json';
+
+const values = [
+  { icon: Shield, name: 'Accountability', desc: 'We take full ownership of every security deployment, ensuring measurable results and transparent reporting.' },
+  { icon: BookOpen, name: 'Education', desc: 'Continuous training and professional development ensures our expert team stays ahead of evolving threats.' },
+  { icon: Heart, name: 'Integrity', desc: 'Honest, ethical conduct in every interaction — with clients, staff, and the communities we serve.' },
+  { icon: Star, name: 'Discipline', desc: 'Military-grade discipline in our operations ensures consistent, reliable service delivery.' },
+  { icon: Target, name: 'Commitment', desc: 'Long-term partnerships built on unwavering dedication to our clients\u2019 safety and success.' },
+  { icon: Users, name: 'Respect', desc: 'Every stakeholder is treated with dignity — from our officers in the field to the clients we protect.' },
+];
+
+const team = teamData as Array<{ name: string; role: string; bio?: string; isSample?: boolean }>;
+
+const badges = ['PSIRA Registered', 'Fully Compliant', 'POPIA Aligned', 'BEE Certified'];
+---
+
+<PublicLayout
+  title="About Us - 35 Years of Trusted Security | Mantis Security"
+  description="Learn about Mantis Security's 35+ year legacy of protecting South African businesses with integrity, professionalism, and integrated security solutions."
+>
+  <!-- Hero -->
+  <section class="relative py-32 md:py-40 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/images/team_photo_stock.png" alt="Mantis Security team" class="absolute inset-0 w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-r from-mantis-black/95 via-mantis-black/80 to-mantis-black/50"></div>
+    </div>
+    <div class="relative max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div class="max-w-2xl">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">35 Years of Protecting What <span class="text-mantis-yellow">Matters</span></h1>
+        <p class="text-lg text-white/80">Our legacy is built on integrity, innovation, and an unwavering commitment to our clients&rsquo; safety and success.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <SectionHeading title="Our Story" subtitle="From a single vision to South Africa's trusted security partner." center={false} />
+          <div class="space-y-4 text-mantis-gray leading-relaxed">
+            <p>Founded over 35 years ago by CEO Mark Kramer, Mantis Security began with a clear vision: to deliver security services that go beyond the basics. In an industry plagued by inconsistency and unprofessionalism, we set out to build something different — a company where <strong class="text-mantis-black">integrity, training, and innovation</strong> are non-negotiable.</p>
+            <p>Today, Mantis Security stands as one of South Africa's most respected security providers. We protect businesses across industries from commercial office parks and industrial facilities to schools, residential estates, and high-profile events.</p>
+            <p>Our approach has always been the same: understand each client's unique risks, design a tailored solution, and deliver with unwavering professionalism. This philosophy, combined with our investment in <strong class="text-mantis-black">cutting-edge technology and elite personnel</strong>, is why organisations choose Mantis as their long-term security partner.</p>
+          </div>
+        </div>
+        <div class="relative aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
+          <img src="/images/officer_patrol_stock.png" alt="Mantis Security officer on duty" class="absolute inset-0 w-full h-full object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="py-16 md:py-20 bg-mantis-light-gray">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 text-center">
+      <SectionHeading title="Our Mission" />
+      <div class="max-w-3xl mx-auto bg-white rounded-xl p-8 md:p-12 shadow-sm border border-gray-100">
+        <p class="text-xl md:text-2xl text-mantis-black leading-relaxed font-medium">
+          To protect people, property, and businesses by delivering professional, reliable, and integrated security solutions that combine highly trained personnel, advanced technology, and proactive risk management across South Africa.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision -->
+  <section class="relative py-16 md:py-24 bg-gradient-to-br from-mantis-red via-mantis-red-dark to-mantis-black overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.08] pointer-events-none" aria-hidden="true">
+      {Array.from({ length: 7 }).map((_, i) => (
+        <Star
+          class="absolute text-mantis-yellow fill-mantis-yellow"
+          width={40 + (i % 3) * 30}
+          height={40 + (i % 3) * 30}
+          style={`top: ${(i * 37) % 90}%; left: ${(i * 53) % 95}%; transform: rotate(${i * 23}deg);`}
+        />
+      ))}
+    </div>
+    <div class="reveal relative max-w-[1200px] mx-auto px-4 sm:px-6 text-center">
+      <div class="w-16 h-16 rounded-full bg-mantis-yellow/15 border border-mantis-yellow/30 flex items-center justify-center mx-auto mb-6">
+        <Shield class="w-8 h-8 text-mantis-yellow" />
+      </div>
+      <p class="eyebrow text-mantis-yellow mb-4">Our Vision</p>
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight max-w-3xl mx-auto">
+        First choice in security for South Africa <span class="text-mantis-yellow">and beyond.</span>
+      </h2>
+      <div class="w-16 h-1 bg-mantis-yellow mx-auto mt-8"></div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <SectionHeading title="Our Values" subtitle="The principles that guide every decision and every deployment." />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {values.map((v, i) => {
+          const Icon = v.icon;
+          return (
+            <div class="reveal bg-mantis-light-gray rounded-xl p-6 hover:shadow-md transition-all group" style={`transition-delay: ${i * 80}ms`}>
+              <div class="w-12 h-12 rounded-xl bg-mantis-red flex items-center justify-center mb-4 group-hover:bg-mantis-red-dark transition-colors">
+                <Icon class="w-6 h-6 text-mantis-yellow" />
+              </div>
+              <h3 class="text-lg font-bold text-mantis-black mb-2">{v.name}</h3>
+              <p class="text-mantis-gray text-sm leading-relaxed">{v.desc}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- PSIRA Compliance -->
+  <section class="py-16 md:py-20 bg-mantis-black">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+        <div class="w-24 h-24 rounded-full bg-mantis-yellow/10 flex items-center justify-center shrink-0">
+          <ClipboardCheck class="w-12 h-12 text-mantis-yellow" />
+        </div>
+        <div>
+          <h2 class="text-3xl font-bold text-white mb-3">Our Commitment to <span class="text-mantis-yellow">Compliance</span></h2>
+          <p class="text-white/70 leading-relaxed">Mantis Security is fully compliant with the Private Security Industry Regulatory Authority (PSIRA). Every officer is registered, vetted, and continuously trained according to the highest industry standards. This means our clients benefit from personnel who are legally authorised, professionally accountable, and equipped to deliver security services that meet all regulatory requirements.</p>
+          <div class="flex flex-wrap gap-4 mt-6">
+            {badges.map((badge) => (
+              <span class="bg-white/10 text-mantis-yellow px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2">
+                <CheckCircle class="w-4 h-4" /> {badge}
+              </span>
+            ))}
+          </div>
+          <!-- PSIRA logo deliberately NOT displayed: PSIRA's mark is trademarked and,
+              per the SASA circular of 11 Aug 2026 on PSIRA Regulation 12, may not be
+              displayed by anyone other than PSIRA on any publication or marketing material. -->
+          <div class="flex flex-wrap items-center gap-6 mt-8">
+            <div class="bg-white rounded-lg px-6 py-4 h-20 flex items-center">
+              <img src="/images/sansea_logo.webp" alt="SANSEA - South African National Security Employers' Association" class="h-14 w-auto object-contain" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Company Video -->
+  <section class="py-16 md:py-24 bg-white">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <SectionHeading eyebrow="See Us in Action" title="Get to Know Mantis Security" subtitle="A closer look at the people, technology, and standards behind our security operations." />
+      <div class="reveal relative aspect-video max-w-4xl mx-auto rounded-md overflow-hidden shadow-2xl ring-1 ring-black/5">
+        <video controls preload="none" poster="/images/guarding_officer_vehicle.jpg" class="w-full h-full object-cover">
+          <source src="/videos/company_video.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leadership Team -->
+  {team.length > 0 && (
+    <section class="py-16 md:py-20">
+      <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+        <SectionHeading title="Leadership Team" subtitle="The experienced professionals guiding Mantis Security's mission." />
+        {team.some((m) => m.isSample) && (
+          <div class="mb-8 bg-mantis-yellow/10 border border-mantis-yellow/30 rounded-lg p-5 text-sm text-mantis-black max-w-3xl mx-auto">
+            <strong>Note for review:</strong> Profiles marked &ldquo;Sample Content&rdquo; below are placeholders showing the intended format. Please send us your real leadership team&rsquo;s names, titles, bios, and (optionally) headshots so we can replace them before launch.
+          </div>
+        )}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {team.map((m, i) => (
+            <div class="reveal relative bg-mantis-light-gray rounded-xl p-6 text-center hover:shadow-md transition-all" style={`transition-delay: ${i * 100}ms`}>
+              {m.isSample && (
+                <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-mantis-yellow text-mantis-black text-xs font-bold px-3 py-1 rounded-full shadow whitespace-nowrap">Sample Content</span>
+              )}
+              <div class="w-20 h-20 rounded-full bg-mantis-yellow/20 flex items-center justify-center mx-auto mb-4">
+                <Users class="w-10 h-10 text-mantis-yellow" />
+              </div>
+              <h3 class="font-bold text-mantis-black text-lg">{m.name}</h3>
+              <p class="text-mantis-red font-medium text-sm mt-1">{m.role}</p>
+              {m.bio && <p class="text-mantis-gray text-sm mt-3 leading-relaxed">{m.bio}</p>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CTASection variant="red" />
+</PublicLayout>

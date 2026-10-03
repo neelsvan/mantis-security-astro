@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+/*
+ * Brand palette ported verbatim from the Next.js site (app/globals.css).
+ * Mantis legacy colors: yellow #FFD700, charcoal #1D1D1D, red/burgundy #8B1A1A.
+ */
+@theme {
+  --color-mantis-yellow: #ffd700;
+  --color-mantis-yellow-light: #fff3b0;
+  --color-mantis-yellow-dark: #e6c200;
+  --color-mantis-red: #8b1a1a;
+  --color-mantis-red-light: #a52a2a;
+  --color-mantis-red-dark: #6b0f0f;
+  --color-mantis-black: #1a1a1a;
+  --color-mantis-charcoal: #1d1d1d;
+  --color-mantis-dark-gray: #2d2d2d;
+  --color-mantis-gray: #4a4a4a;
+  --color-mantis-slate: #7e8798;
+  --color-mantis-light-gray: #f5f5f5;
+  --color-mantis-surface: #f3f3f3;
+  --color-mantis-surface-cool: #e8eef2;
+
+  --font-sans: "Roboto", system-ui, sans-serif;
+  --font-heading: "Montserrat", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply max-w-[1200px] mx-auto px-4 sm:px-6;
+  }
+
+  /* Small uppercase kicker above headings (color set at usage site) */
+  .eyebrow {
+    @apply font-heading text-xs md:text-sm font-semibold uppercase tracking-[0.25em];
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-mantis-yellow hover:bg-mantis-yellow-dark text-mantis-black font-heading font-bold px-8 py-4 rounded-md transition-all hover:shadow-lg hover:shadow-mantis-yellow/20;
+  }
+
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center gap-2 border-2 border-white/40 hover:border-mantis-yellow text-white hover:text-mantis-yellow font-heading font-bold px-8 py-4 rounded-md transition-all;
+  }
+
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 bg-mantis-black hover:bg-mantis-dark-gray text-white font-heading font-bold px-8 py-4 rounded-md transition-all;
+  }
+
+  /* Desktop nav link with growing yellow underline */
+  .nav-link {
+    @apply relative font-heading text-[13px] font-semibold uppercase tracking-wider text-white/90 hover:text-white px-2.5 py-2 whitespace-nowrap transition-colors;
+  }
+  .nav-link::after {
+    content: '';
+    @apply absolute left-3 right-3 bottom-0 h-0.5 bg-mantis-yellow scale-x-0 origin-left transition-transform duration-300;
+  }
+  .nav-link:hover::after {
+    @apply scale-x-100;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-mantis-charcoal);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-mantis-yellow);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-mantis-yellow-dark);
+}
+
+/* Scroll-reveal (replaces framer-motion whileInView) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s ease-out;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

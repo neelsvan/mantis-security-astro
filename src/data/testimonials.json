@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Lisa Govender",
+    "company": "Sandton City Events",
+    "role": "Events Director",
+    "content": "We've used Mantis for several large-scale events and they never disappoint. Their planning is meticulous, their personnel are professional, and their communication is excellent. We won't use anyone else.",
+    "rating": 5,
+    "industry": "Events",
+    "imageUrl": null,
+    "featured": false
+  },
+  {
+    "name": "Peter Steenkamp",
+    "company": "KwaDukuza Logistics Hub",
+    "role": "Risk Manager",
+    "content": "Mantis's investigation capability uncovered significant internal theft that had gone undetected for months. Their proactive approach and intelligence-driven methods have saved us millions in potential losses.",
+    "rating": 5,
+    "industry": "Logistics",
+    "imageUrl": null,
+    "featured": false
+  },
+  {
+    "name": "Thandi Mkhize",
+    "company": "Highveld Academy",
+    "role": "Principal",
+    "content": "The safety of our learners and staff is paramount. Mantis implemented a campus-wide security system that gives us peace of mind. Their guards are respectful, disciplined, and well-integrated into our school environment.",
+    "rating": 5,
+    "industry": "Education",
+    "imageUrl": null,
+    "featured": false
+  },
+  {
+    "name": "Johan Pretorius",
+    "company": "Rosebank Office Park",
+    "role": "Facilities Manager",
+    "content": "Mantis designed a complete security solution for our multi-tenant office park. From visitor management to after-hours monitoring, every detail is covered. They are a true partner, not just a service provider.",
+    "rating": 5,
+    "industry": "Commercial",
+    "imageUrl": null,
+    "featured": true
+  },
+  {
+    "name": "Sarah Nkosi",
+    "company": "Greenstone Residential Estate",
+    "role": "Estate Manager",
+    "content": "We switched to Mantis after years of unreliable service from other providers. The difference was immediate — professional guards, seamless access control, and a control room that actually responds. Our residents finally feel safe.",
+    "rating": 5,
+    "industry": "Residential",
+    "imageUrl": null,
+    "featured": true
+  },
+  {
+    "name": "David van Rensburg",
+    "company": "Oakfield Industrial Park",
+    "role": "Operations Director",
+    "content": "Mantis Security transformed our facility security. Their integrated approach combining CCTV analytics with professional guarding reduced incidents by 75% in the first year. The team is professional, responsive, and truly understands industrial security challenges.",
+    "rating": 5,
+    "industry": "Industrial",
+    "imageUrl": null,
+    "featured": true
+  }
+]

@@ -1,0 +1,63 @@
+---
+import { Shield, Clock, Award, Users } from '@lucide/astro';
+
+const trustItems = [
+  { icon: Award, label: 'Years Experience', value: 35, suffix: '+' },
+  { icon: Shield, label: 'PSIRA Compliant', value: 100, suffix: '%' },
+  { icon: Clock, label: '24/7 Control Room', value: 24, suffix: '/7' },
+  { icon: Users, label: 'Active Clients', value: 200, suffix: '+' },
+];
+---
+
+<section class="bg-mantis-charcoal border-t-4 border-mantis-yellow py-10">
+  <div class="container-site">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      {trustItems.map((item, i) => (
+        <div class="reveal text-center" style={`transition-delay: ${i * 100}ms`}>
+          <item.icon class="w-7 h-7 text-mantis-yellow/80 mx-auto mb-3" />
+          <div class="font-heading text-4xl md:text-5xl font-extrabold text-mantis-yellow">
+            <span
+              class="animated-counter"
+              data-end={item.value}
+              data-suffix={item.suffix}
+              data-duration="2000">{item.value}{item.suffix}</span>
+          </div>
+          <div class="text-white/60 text-xs uppercase tracking-[0.2em] mt-2">{item.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Count-up animation: starts from 0 when scrolled into view (replaces AnimatedCounter).
+  const counters = document.querySelectorAll<HTMLSpanElement>('.animated-counter');
+
+  const animate = (el: HTMLSpanElement) => {
+    const end = Number(el.dataset.end ?? 0);
+    const suffix = el.dataset.suffix ?? '';
+    const duration = Number(el.dataset.duration ?? 2000);
+    const startTime = Date.now();
+    const tick = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = `${Math.floor(eased * end)}${suffix}`;
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          animate(entry.target as HTMLSpanElement);
+          io.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: 0.3 }
+  );
+  counters.forEach((el) => io.observe(el));
+</script>

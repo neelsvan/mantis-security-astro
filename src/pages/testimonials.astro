@@ -1,0 +1,90 @@
+---
+import PublicLayout from '../layouts/PublicLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import { Star, Quote, Building2 } from '@lucide/astro';
+import testimonialsData from '../data/testimonials.json';
+
+type Testimonial = {
+  name: string;
+  role: string;
+  company: string;
+  content: string;
+  rating: number;
+  industry: string;
+  isSample?: boolean;
+  pendingApproval?: boolean;
+};
+
+const testimonials = testimonialsData as Testimonial[];
+---
+
+<PublicLayout
+  title="Client Testimonials | Mantis Security"
+  description="Read what our clients say about Mantis Security. Trusted by 200+ businesses across South Africa for over 35 years."
+>
+  <section class="relative py-28 md:py-36 bg-mantis-black">
+    <div class="relative max-w-[1200px] mx-auto px-4 sm:px-6 text-center">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-mantis-yellow/10 border border-mantis-yellow/20 rounded-full px-4 py-2 mb-6">
+          <Star class="w-4 h-4 text-mantis-yellow" />
+          <span class="text-mantis-yellow text-sm font-medium">Client Success Stories</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">What Our <span class="text-mantis-yellow">Clients</span> Say</h1>
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">Trusted by over 200 businesses across South Africa for more than 35 years.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      {testimonials.some((t) => t.pendingApproval) && (
+        <div class="mb-6 bg-mantis-yellow/10 border border-mantis-yellow/30 rounded-lg p-5 text-sm text-mantis-black">
+          <strong>Note for review:</strong> Testimonials marked &ldquo;Pending Client Approval&rdquo; are real, but the client has asked to approve how their name appears before the site goes live.
+        </div>
+      )}
+      {testimonials.some((t) => t.isSample) && (
+        <div class="mb-10 bg-mantis-yellow/10 border border-mantis-yellow/30 rounded-lg p-5 text-sm text-mantis-black">
+          <strong>Note for review:</strong> Testimonials marked &ldquo;Sample Content&rdquo; below are placeholders showing the intended format. Please send us your real client testimonials (name, company, role, quote, and optionally a headshot) so we can replace them before launch.
+        </div>
+      )}
+      {testimonials.length === 0 ? (
+        <div class="text-center py-20">
+          <Quote class="w-16 h-16 text-gray-300 mx-auto mb-4" />
+          <p class="text-gray-500 text-lg">Client testimonials coming soon.</p>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {testimonials.map((t, i) => (
+            <div class="reveal bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow relative" style={`transition-delay: ${i * 100}ms`}>
+              {t.isSample && (
+                <span class="absolute -top-3 left-6 bg-mantis-yellow text-mantis-black text-xs font-bold px-3 py-1 rounded-full shadow">Sample Content</span>
+              )}
+              {t.pendingApproval && (
+                <span class="absolute -top-3 left-6 bg-mantis-yellow text-mantis-black text-xs font-bold px-3 py-1 rounded-full shadow">Pending Client Approval</span>
+              )}
+              <Quote class="w-10 h-10 text-mantis-yellow/20 absolute top-6 right-6" />
+              <div class="flex gap-1 mb-4">
+                {Array.from({ length: t.rating ?? 5 }).map(() => (
+                  <Star class="w-5 h-5 text-mantis-yellow fill-mantis-yellow" />
+                ))}
+              </div>
+              <p class="text-gray-700 mb-6 leading-relaxed italic">&ldquo;{t.content}&rdquo;</p>
+              <div class="flex items-center gap-3 border-t pt-4">
+                <div class="w-12 h-12 bg-mantis-black/10 rounded-full flex items-center justify-center">
+                  <Building2 class="w-6 h-6 text-mantis-black/50" />
+                </div>
+                <div>
+                  <p class="font-semibold text-mantis-black">{t.name}</p>
+                  <p class="text-sm text-gray-500">{t.role}{t.company ? `, ${t.company}` : ''}</p>
+                </div>
+                {t.industry && <span class="ml-auto text-xs bg-mantis-yellow/10 text-mantis-yellow px-3 py-1 rounded-full font-medium">{t.industry}</span>}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <CTASection variant="red" title="Join 200+ Satisfied Clients" subtitle="Experience the Mantis Security difference. Request your free security assessment today." buttonText="Request Assessment" buttonHref="/contact" />
+</PublicLayout>

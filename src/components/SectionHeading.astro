@@ -1,0 +1,19 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  eyebrow?: string;
+  light?: boolean;
+  center?: boolean;
+}
+const { title, subtitle, eyebrow, light = false, center = true } = Astro.props;
+---
+
+<div class={`reveal mb-10 md:mb-14 ${center ? 'text-center' : ''}`}>
+  {eyebrow && <p class={`eyebrow mb-3 ${light ? 'text-mantis-yellow' : 'text-mantis-red'}`}>{eyebrow}</p>}
+  <h2 class={`text-3xl md:text-4xl lg:text-[2.75rem] font-bold leading-tight ${light ? 'text-white' : 'text-mantis-black'}`}>{title}</h2>
+  <div class={`w-16 h-1 bg-mantis-yellow mt-5 ${center ? 'mx-auto' : ''}`}></div>
+  {subtitle && (
+    <p class={`mt-5 text-lg leading-relaxed max-w-2xl ${center ? 'mx-auto' : ''} ${light ? 'text-white/70' : 'text-mantis-gray'}`}>{subtitle}</p>
+  )}
+</div>

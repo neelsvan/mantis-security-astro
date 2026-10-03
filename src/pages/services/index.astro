@@ -1,0 +1,76 @@
+---
+import PublicLayout from '../../layouts/PublicLayout.astro';
+import CTASection from '../../components/CTASection.astro';
+import * as Lucide from '@lucide/astro';
+import { Layers, Shield, ChevronRight } from '@lucide/astro';
+import { services } from '../../data/services';
+
+const getIcon = (name: string) => (Lucide as unknown as Record<string, any>)[name] ?? null;
+---
+
+<PublicLayout
+  title="Security Services - Integrated Protection Solutions | Mantis Security"
+  description="Explore Mantis Security's comprehensive range of integrated security services including guarding, electronic security, monitoring, risk assessments, VIP protection, and investigations."
+>
+  <!-- Hero -->
+  <section class="relative py-32 md:py-40 bg-mantis-black">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Beyond Guarding: Your Complete <span class="text-mantis-yellow">Security Partner</span></h1>
+        <p class="text-lg text-white/70">Explore our full suite of integrated services, from intelligent surveillance and risk assessments to specialised guarding and investigations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Integrated Approach -->
+  <section class="py-12 bg-mantis-light-gray">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row items-center gap-6 bg-white rounded-xl p-8 shadow-sm">
+        <div class="w-16 h-16 rounded-xl bg-mantis-yellow/10 flex items-center justify-center shrink-0">
+          <Layers class="w-8 h-8 text-mantis-yellow" />
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-mantis-black mb-2">The Integrated Approach</h2>
+          <p class="text-mantis-gray">Our services are designed to work together as a unified security ecosystem. When you combine guarding with technology and monitoring, each component strengthens the others — eliminating single points of failure and providing comprehensive situational awareness.</p>
+        </div>
+        <a href="/contact?type=assessment" class="bg-mantis-red hover:bg-mantis-red-dark text-white px-6 py-3 rounded-lg font-bold transition-all shrink-0 whitespace-nowrap flex items-center gap-2">
+          <Shield class="w-4 h-4" /> Get Consultation
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {services.map((s, i) => {
+          const Icon = getIcon(s.cardIcon);
+          return (
+            <div class="reveal" style={`transition-delay: ${i * 80}ms`}>
+              <a href={`/services/${s.slug}`} class="group flex flex-col sm:flex-row bg-white rounded-xl shadow-sm hover:shadow-xl transition-all overflow-hidden border border-gray-100 h-full">
+                <div class="relative w-full sm:w-48 aspect-video sm:aspect-auto shrink-0 bg-gray-100">
+                  <img src={s.cardImage} alt={s.cardName} class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                </div>
+                <div class="p-5 flex flex-col justify-between flex-1">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      {Icon && <Icon class="w-5 h-5 text-mantis-red" />}
+                      <h3 class="font-bold text-mantis-black">{s.cardName}</h3>
+                    </div>
+                    <p class="text-mantis-gray text-sm leading-relaxed">{s.cardDesc}</p>
+                  </div>
+                  <span class="mt-3 inline-flex items-center gap-1 text-mantis-red font-semibold text-sm group-hover:text-mantis-red-light">
+                    Learn More <ChevronRight class="w-4 h-4" />
+                  </span>
+                </div>
+              </a>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <CTASection title="Don't see what you need?" subtitle="Let's design a custom security solution tailored to your specific requirements." />
+</PublicLayout>

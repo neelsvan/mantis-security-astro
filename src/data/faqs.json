@@ -1,0 +1,50 @@
+[
+  {
+    "question": "Is Mantis Security PSIRA compliant?",
+    "answer": "Yes, Mantis Security is fully compliant with the Private Security Industry Regulatory Authority (PSIRA). All our security officers are registered, vetted, and trained according to PSIRA standards. This ensures that our personnel meet the highest industry requirements for professionalism and accountability.",
+    "category": "General",
+    "order": 1
+  },
+  {
+    "question": "What industries do you serve?",
+    "answer": "We provide tailored security solutions for a wide range of industries including commercial office parks, industrial and manufacturing facilities, warehousing and logistics, educational institutions, residential estates, and the hospitality and retail sectors. Each solution is customised to address the unique risks and requirements of the specific environment.",
+    "category": "Services",
+    "order": 2
+  },
+  {
+    "question": "How do you ensure the quality of your security personnel?",
+    "answer": "Every Mantis security officer undergoes rigorous recruitment screening, background checks, and comprehensive training programs. We invest in ongoing education and regular performance assessments to maintain the highest standards of professionalism, discipline, and reliability.",
+    "category": "General",
+    "order": 3
+  },
+  {
+    "question": "What is a security audit and risk assessment?",
+    "answer": "A security audit is a professional evaluation of your current security measures, identifying vulnerabilities and gaps. Our experts assess physical security, technology systems, personnel deployment, and operational procedures. We then provide detailed recommendations and a tailored strategy to address identified risks and strengthen your overall security posture.",
+    "category": "Services",
+    "order": 4
+  },
+  {
+    "question": "Do you offer 24/7 monitoring services?",
+    "answer": "Yes, our dedicated Control Room operates 24 hours a day, 7 days a week, 365 days a year. We provide offsite CCTV monitoring, alarm response management, and real-time incident reporting. Our trained operators maintain constant vigilance to ensure rapid response to any security event.",
+    "category": "Services",
+    "order": 5
+  },
+  {
+    "question": "Can you integrate with our existing security systems?",
+    "answer": "Absolutely. Mantis Security specialises in integrating new technology with existing infrastructure. We assess your current systems and design solutions that enhance and unify your security ecosystem, minimising disruption and maximising the value of your existing investments.",
+    "category": "Technology",
+    "order": 6
+  },
+  {
+    "question": "What areas do you service?",
+    "answer": "We primarily operate in Johannesburg, Pretoria, Bedfordview, Sandton, Germiston, Boksburg, and the greater Gauteng region. We also serve clients in Cape Town and other major South African centres. Contact us to discuss your specific location requirements.",
+    "category": "General",
+    "order": 7
+  },
+  {
+    "question": "How quickly can you deploy security services?",
+    "answer": "Deployment timelines depend on the scope and complexity of the requirement. For standard guarding services, we can typically deploy within 48-72 hours. For integrated solutions involving technology installation and custom planning, we work with you to establish a timeline that ensures quality implementation without compromising thoroughness.",
+    "category": "Services",
+    "order": 8
+  }
+]
