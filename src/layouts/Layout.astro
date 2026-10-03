@@ -49,6 +49,7 @@ const canonical = new URL(Astro.url.pathname, SITE_URL);
     <link rel="icon" type="image/png" sizes="512x512" href="/icon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body class="bg-white text-mantis-black font-sans">
     <slot />
@@ -67,6 +68,14 @@ const canonical = new URL(Astro.url.pathname, SITE_URL);
         { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
       );
       els.forEach((el) => io.observe(el));
+      // Safety net: never leave content hidden (printing, crawlers, odd browsers) —
+      // anything not yet revealed becomes visible shortly after load.
+      setTimeout(() => {
+        els.forEach((el) => {
+          el.classList.add('is-visible');
+          io.unobserve(el);
+        });
+      }, 2000);
     </script>
   </body>
 </html>

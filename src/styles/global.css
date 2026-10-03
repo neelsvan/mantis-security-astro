@@ -96,20 +96,22 @@ body {
   background: var(--color-mantis-yellow-dark);
 }
 
-/* Scroll-reveal (replaces framer-motion whileInView) */
-.reveal {
+/* Scroll-reveal (replaces framer-motion whileInView).
+   Progressive enhancement: content is visible by default and only starts
+   hidden when JS is available (html.js set inline in Layout). */
+.js .reveal {
   opacity: 0;
   transform: translateY(24px);
   transition:
     opacity 0.7s ease-out,
     transform 0.7s ease-out;
 }
-.reveal.is-visible {
+.js .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .js .reveal {
     opacity: 1;
     transform: none;
     transition: none;
